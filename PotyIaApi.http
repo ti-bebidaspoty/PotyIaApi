@@ -1,0 +1,6 @@
+@PotyIaApi_HostAddress = http://localhost:5105
+
+GET {{PotyIaApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

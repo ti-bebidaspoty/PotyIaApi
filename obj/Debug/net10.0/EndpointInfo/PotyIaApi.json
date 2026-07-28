@@ -1,0 +1,82 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "PotyIaApi",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Autenticacao": {
+      "post": {
+        "tags": [
+          "Autenticacao"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AutenticacaoModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AutenticacaoModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AutenticacaoModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "tags": [
+          "PotyIaApi"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AutenticacaoModel": {
+        "required": [
+          "Senha",
+          "Usuario"
+        ],
+        "type": "object",
+        "properties": {
+          "Usuario": {
+            "type": "string",
+            "nullable": true
+          },
+          "Senha": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Autenticacao"
+    },
+    {
+      "name": "PotyIaApi"
+    }
+  ]
+}
