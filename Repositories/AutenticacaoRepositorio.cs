@@ -23,11 +23,9 @@ namespace PotyIaApi.Repositories
             {
                 AbrirConexao(con);
 
-                string query = @"SELECT U.UsuarioID, U.Nome
-	                                    FROM Global.Usuarios U
-	                                    INNER JOIN Global.UsuariosAplicacoes UA ON U.UsuarioID = UA.UsuarioID
-	                                    INNER JOIN GLOBAL.Aplicacoes A ON A.AplicacaoID = UA.AplicacaoID
-	                                    WHERE U.Usuario = @Usuario AND U.Senha = @Senha AND U.Ativo = 1 AND A.Descricao = 'Poty IA' AND A.Ativo = 1";
+                string query = @"SELECT UsuarioID, Nome
+	                                FROM Global.Usuarios
+	                                WHERE Usuario = @Usuario AND Senha = @Senha";
 
                 using var cmd = new SqlCommand(query, con);
                 cmd.Parameters.AddWithValue("@Usuario", autenticacao.Usuario);

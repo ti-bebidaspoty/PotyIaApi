@@ -50,3 +50,4 @@ C:\Users\joao.martins\Documents\GitHub\PotyIaApi\obj\Release\net10.0\refint\Poty
 C:\Users\joao.martins\Documents\GitHub\PotyIaApi\obj\Release\net10.0\PotyIaApi.pdb
 C:\Users\joao.martins\Documents\GitHub\PotyIaApi\obj\Release\net10.0\PotyIaApi.genruntimeconfig.cache
 C:\Users\joao.martins\Documents\GitHub\PotyIaApi\obj\Release\net10.0\ref\PotyIaApi.dll
+C:\Users\joao.martins\Documents\GitHub\PotyIaApi\obj\Release\net10.0\PotyIaApi.sourcelink.json

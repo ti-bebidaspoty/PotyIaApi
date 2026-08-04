@@ -3,12 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\joao.martins\\Documents\\GitHub\\PotyIaApi\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{99BBA2C0-D0D3-513A-3BFB-E6280D52DCD9}|PotyIaApi.csproj|c:\\users\\joao.martins\\documents\\github\\potyiaapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{99BBA2C0-D0D3-513A-3BFB-E6280D52DCD9}|PotyIaApi.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{99BBA2C0-D0D3-513A-3BFB-E6280D52DCD9}|PotyIaApi.csproj|c:\\users\\joao.martins\\documents\\github\\potyiaapi\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{99BBA2C0-D0D3-513A-3BFB-E6280D52DCD9}|PotyIaApi.csproj|solutionrelative:properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{99BBA2C0-D0D3-513A-3BFB-E6280D52DCD9}|PotyIaApi.csproj|c:\\users\\joao.martins\\documents\\github\\potyiaapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{99BBA2C0-D0D3-513A-3BFB-E6280D52DCD9}|PotyIaApi.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,7 +14,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -26,28 +22,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "launchSettings.json",
-              "DocumentMoniker": "C:\\Users\\joao.martins\\Documents\\GitHub\\PotyIaApi\\Properties\\launchSettings.json",
-              "RelativeDocumentMoniker": "Properties\\launchSettings.json",
-              "ToolTip": "C:\\Users\\joao.martins\\Documents\\GitHub\\PotyIaApi\\Properties\\launchSettings.json",
-              "RelativeToolTip": "Properties\\launchSettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-07-28T10:52:40.354Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\joao.martins\\Documents\\GitHub\\PotyIaApi\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\joao.martins\\Documents\\GitHub\\PotyIaApi\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAABgAAAAAAAAAAAAAAEAAAAAyAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-28T10:38:44.293Z",
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\joao.martins\\Documents\\GitHub\\PotyIaApi\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "C:\\Users\\joao.martins\\Documents\\GitHub\\PotyIaApi\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-08-04T13:48:05.62Z",
               "EditorCaption": ""
             }
           ]

@@ -50,3 +50,4 @@ C:\Users\joao.martins\Documents\GitHub\PotyIaApi\obj\Debug\net10.0\PotyIaApi.pdb
 C:\Users\joao.martins\Documents\GitHub\PotyIaApi\obj\Debug\net10.0\PotyIaApi.genruntimeconfig.cache
 C:\Users\joao.martins\Documents\GitHub\PotyIaApi\obj\Debug\net10.0\ref\PotyIaApi.dll
 C:\Users\joao.martins\Documents\GitHub\PotyIaApi\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
+C:\Users\joao.martins\Documents\GitHub\PotyIaApi\obj\Debug\net10.0\PotyIaApi.sourcelink.json
