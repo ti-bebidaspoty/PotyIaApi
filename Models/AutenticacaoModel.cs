@@ -2,7 +2,7 @@
 {
     public class AutenticacaoModel
     {
-        public required string Usuario { get; set; }
+        public required string CPF { get; set; }
         public required string Senha { get; set; }
     }
 

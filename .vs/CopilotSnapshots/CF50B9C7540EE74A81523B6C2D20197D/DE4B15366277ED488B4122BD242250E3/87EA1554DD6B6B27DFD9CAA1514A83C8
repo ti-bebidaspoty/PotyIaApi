@@ -1,0 +1,51 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using PotyIaApi.Models;
+using PotyIaApi.Services;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+
+namespace PotyIaApi.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class AutenticacaoController : BasicaController
+    {
+        private readonly IConfiguration _configuracao;
+        private readonly AutenticacaoService _autenticacaoService;
+        private readonly RefreshTokenService _refreshTokenService;
+
+        public AutenticacaoController(IConfiguration configuration, AutenticacaoService autenticacaoService, RefreshTokenService refreshTokenService)
+        {
+            _configuracao = configuration;
+            _autenticacaoService = autenticacaoService;
+            _refreshTokenService = refreshTokenService;
+        }
+
+        [HttpPost]
+        [Route("")]
+        public IActionResult RealizarAutenticacao([FromBody] AutenticacaoModel login)
+        {
+            try
+            {
+                var usuario = _autenticacaoService.RealizarAutenticacao(login);
+
+                if (usuario == null)
+                    return retornoApi(null, 400, "Usuário ou senha incorretos!");
+
+                var accessToken = _refreshTokenService.GerarAccessToken(usuario);
+
+                return retornoApi(new
+                {
+                    AccessToken = accessToken,
+                    Usuario = usuario
+                });
+            }
+            catch (Exception ex)
+            {
+                return retornoApi(null, 500, $"Erro ao autenticar usuário: {ex.Message}");
+            }
+        }
+    }
+}

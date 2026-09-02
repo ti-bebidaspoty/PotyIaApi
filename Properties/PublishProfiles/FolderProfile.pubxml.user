@@ -3,7 +3,7 @@
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>C:\Users\joao.martins\Documents\GitHub\PotyIaApi\bin\Release\net10.0\publish\</_PublishTargetUrl>
-    <History>True|2026-08-04T13:48:15.8013937Z||;True|2026-07-30T07:39:38.7787138-03:00||;True|2026-07-28T08:29:01.6610310-03:00||;</History>
+    <History>True|2026-09-02T19:49:15.4747444Z||;True|2026-09-02T16:28:57.9226970-03:00||;True|2026-09-02T15:53:03.7465107-03:00||;True|2026-09-02T14:45:53.4665983-03:00||;True|2026-08-04T10:48:15.8013937-03:00||;True|2026-07-30T07:39:38.7787138-03:00||;True|2026-07-28T08:29:01.6610310-03:00||;</History>
     <LastFailureDetails />
   </PropertyGroup>
 </Project>

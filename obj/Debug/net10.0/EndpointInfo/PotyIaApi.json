@@ -36,10 +36,63 @@
         }
       }
     },
+    "/api/Autenticacao/refresh-token": {
+      "post": {
+        "tags": [
+          "Autenticacao"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshTokenRequestModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshTokenRequestModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshTokenRequestModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/": {
       "get": {
         "tags": [
           "PotyIaApi"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Usuario/{cpf}": {
+      "post": {
+        "tags": [
+          "Usuario"
+        ],
+        "parameters": [
+          {
+            "name": "cpf",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -53,16 +106,29 @@
     "schemas": {
       "AutenticacaoModel": {
         "required": [
-          "Senha",
-          "Usuario"
+          "CPF",
+          "Senha"
         ],
         "type": "object",
         "properties": {
-          "Usuario": {
+          "CPF": {
             "type": "string",
             "nullable": true
           },
           "Senha": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RefreshTokenRequestModel": {
+        "required": [
+          "RefreshToken"
+        ],
+        "type": "object",
+        "properties": {
+          "RefreshToken": {
             "type": "string",
             "nullable": true
           }
@@ -77,6 +143,9 @@
     },
     {
       "name": "PotyIaApi"
+    },
+    {
+      "name": "Usuario"
     }
   ]
 }

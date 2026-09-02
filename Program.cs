@@ -60,9 +60,19 @@ builder.Services.AddScoped<
     IAutenticacaoRepositorio,
     AutenticacaoRepositorio>();
 
+builder.Services.AddScoped<
+    IUsuarioRepositorio,
+    UsuarioRepositorio>();
+
+builder.Services.AddScoped<
+    IRefreshTokenRepositorio,
+    RefreshTokenRepositorio>();
+
 builder.Services.AddScoped<AutenticacaoService>();
 
 builder.Services.AddScoped<RefreshTokenService>();
+
+builder.Services.AddScoped<UsuarioService>();
 
 // ======================================================
 // CORS

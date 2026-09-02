@@ -1,0 +1,22 @@
+﻿{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "ConnectionStrings": {
+    "Senior": "Data Source=10.10.4.206;Initial Catalog=vetorh_prod;User ID=potyiaapi;Password=1AD403d4@;TrustServerCertificate=True;Encrypt=false",
+    "InternosPoty": "Data Source=sazdb1-poty.brazilsouth.cloudapp.azure.com,1438;Initial Catalog=InternosPoty;User ID=potyinternosapp;Password=Poty2024@",
+    "PotyDesk": "Data Source=sazdb1-poty.brazilsouth.cloudapp.azure.com,1438;Initial Catalog=PotyDesk;User ID=potydeskapi;Password=Poty2025@;TrustServerCertificate=True;Encrypt=false;MultipleActiveResultSets=true"
+  },
+  "AllowedHosts": "*",
+  "AllowedCors": "*",
+  "Jwt": {
+    "Key": "eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTc1MDc2OTM4NCwiaWF0IjoxNzUwNzY5Mzg0fQ.rHum0DoUSlG934Jy482FzqEn4rNffXFz4XNYHA91l_E",
+    "Issuer": "PotyIaApi.Api",
+    "Audience": "PotyIaApi.Angular",
+    "AccessTokenExpirationMinutes": 120,
+    "RefreshTokenExpirationDays": 7
+  }
+}
