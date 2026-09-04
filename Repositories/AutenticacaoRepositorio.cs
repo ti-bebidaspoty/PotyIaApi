@@ -28,7 +28,7 @@ namespace PotyIaApi.Repositories
 	                                WHERE CPF = @CPF AND Senha = @Senha AND Ativo = 1";
 
                 using var cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@CPF", _helper.Criptografar(autenticacao.CPF));
+                cmd.Parameters.AddWithValue("@CPF", autenticacao.CPF);
                 cmd.Parameters.AddWithValue("@Senha", _helper.Criptografar(autenticacao.Senha));
                 using SqlDataReader reader = cmd.ExecuteReader();
                 reader.Read();

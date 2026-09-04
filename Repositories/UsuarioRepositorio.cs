@@ -67,7 +67,7 @@ namespace PotyIaApi.Repositories
                 if (reader.HasRows) usuario = new UsuarioFormModel
                 {
                     Nome = reader["Nome"].ToString()!,
-                    CPF = _helper.Criptografar(reader["CPF"].ToString()!),
+                    CPF = reader["CPF"].ToString()!,
                     Senha = _helper.Criptografar(reader["DataNascimento"].ToString()!),
                 };
             }
@@ -93,7 +93,7 @@ namespace PotyIaApi.Repositories
                 string query = @"SELECT COUNT(*) FROM PotyIA.Usuarios WHERE CPF = @CPF";
                 using (var cmd = new SqlCommand(query, con))
                 {
-                    cmd.Parameters.AddWithValue("@CPF", _helper.Criptografar(cpf));
+                    cmd.Parameters.AddWithValue("@CPF", cpf);
                     int count = (int)cmd.ExecuteScalar();
                     usuarioJaCadastrado = count > 0;
                 }
