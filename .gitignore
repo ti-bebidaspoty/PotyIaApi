@@ -1,0 +1,88 @@
+# =========================
+# Visual Studio
+# =========================
+.vs/
+**/.vs/
+
+# Arquivos de usuário do Visual Studio
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Índices/cache do Visual Studio
+*.vsidx
+
+# =========================
+# Build .NET
+# =========================
+bin/
+obj/
+**/bin/
+**/obj/
+
+# Build results
+[Bb]uild/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+
+# =========================
+# NuGet
+# =========================
+*.nupkg
+*.snupkg
+packages/
+
+# Não ignorar targets importantes do NuGet
+!**/packages/build/
+!**/packages/repositories.config
+
+# =========================
+# Publicação
+# =========================
+publish/
+**/publish/
+
+# =========================
+# Logs
+# =========================
+*.log
+logs/
+Logs/
+
+# =========================
+# Temporários
+# =========================
+*.tmp
+*.temp
+*.bak
+*.cache
+
+# =========================
+# JetBrains Rider
+# =========================
+.idea/
+*.sln.iml
+
+# =========================
+# VS Code
+# =========================
+.vscode/
+
+# =========================
+# Sistema operacional
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Testes / cobertura
+# =========================
+TestResults/
+coverage/
+coverage.xml
+coverage.json
+*.coverage
+*.coveragexml

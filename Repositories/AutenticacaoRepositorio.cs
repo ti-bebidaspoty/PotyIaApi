@@ -1,7 +1,7 @@
 ﻿using PotyIaApi.Helpers;
 using PotyIaApi.Interfaces;
 using PotyIaApi.Models;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 
 namespace PotyIaApi.Repositories
 {

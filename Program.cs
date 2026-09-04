@@ -187,7 +187,7 @@ app.MapGet("/", () => Results.Redirect("/swagger"));
 // ======================================================
 
 // Redireciona chamadas HTTP para HTTPS.
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseCors("CorsLiberado");
 
