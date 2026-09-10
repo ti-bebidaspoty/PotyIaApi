@@ -14,7 +14,7 @@ namespace PotyIaApi.Repositories
 
         public SqlConnection BuscarConexao()
         {
-            return new SqlConnection(_configuracao.GetConnectionString("InternosPoty"));
+            return new SqlConnection(_configuracao.GetConnectionString("PotyInternos"));
         }
 
         public SqlConnection BuscarConexaoSenior()

@@ -6,7 +6,7 @@ namespace PotyIaApi.Interfaces
     {
         void Inserir(RefreshTokenModel refreshToken);
         RefreshTokenModel? BuscarPorHash(string tokenHash);
-        void Revogar(long id, string? substituidoPorTokenHash);
+        void Revogar(long id, string substituidoPorTokenHash);
         void RevogarTodosDoUsuario(string usuarioID);
     }
 }

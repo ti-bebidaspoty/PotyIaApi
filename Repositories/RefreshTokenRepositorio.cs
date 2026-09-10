@@ -1,6 +1,6 @@
+using Microsoft.Data.SqlClient;
 using PotyIaApi.Interfaces;
 using PotyIaApi.Models;
-using Microsoft.Data.SqlClient;
 
 namespace PotyIaApi.Repositories
 {
@@ -18,16 +18,17 @@ namespace PotyIaApi.Repositories
             {
                 AbrirConexao(con);
 
-                string query = @"INSERT INTO PotyIA.RefreshTokens
-                                    (TokenHash, UsuarioID, CriadoEm, ExpiraEm)
-                                 VALUES
-                                    (@TokenHash, @UsuarioID, @CriadoEm, @ExpiraEm)";
+                const string query = @"INSERT INTO Global.RefreshTokens
+                                           (TokenHash, UsuarioID, CriadoEm, ExpiraEm)
+                                       VALUES
+                                           (@TokenHash, @UsuarioID, @CriadoEm, @ExpiraEm);";
 
                 using var cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@TokenHash", refreshToken.TokenHash);
-                cmd.Parameters.AddWithValue("@UsuarioID", refreshToken.UsuarioID);
-                cmd.Parameters.AddWithValue("@CriadoEm", refreshToken.CriadoEm);
-                cmd.Parameters.AddWithValue("@ExpiraEm", refreshToken.ExpiraEm);
+                cmd.Parameters.Add("@TokenHash", System.Data.SqlDbType.VarChar, 128).Value = refreshToken.TokenHash;
+                cmd.Parameters.Add("@UsuarioID", System.Data.SqlDbType.VarChar, 50).Value = refreshToken.UsuarioID;
+                cmd.Parameters.Add("@CriadoEm", System.Data.SqlDbType.DateTime2).Value = refreshToken.CriadoEm;
+                cmd.Parameters.Add("@ExpiraEm", System.Data.SqlDbType.DateTime2).Value = refreshToken.ExpiraEm;
+
                 cmd.ExecuteNonQuery();
             }
             catch (Exception)
@@ -49,13 +50,14 @@ namespace PotyIaApi.Repositories
             {
                 AbrirConexao(con);
 
-                string query = @"SELECT Id, TokenHash, UsuarioID, CriadoEm, ExpiraEm,
-                                        RevogadoEm, SubstituidoPorTokenHash
-                                 FROM PotyIA.RefreshTokens
-                                 WHERE TokenHash = @TokenHash";
+                const string query = @"SELECT Id, TokenHash, UsuarioID, CriadoEm, ExpiraEm,
+                                              RevogadoEm, SubstituidoPorTokenHash
+                                       FROM Global.RefreshTokens
+                                       WHERE TokenHash = @TokenHash;";
 
                 using var cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@TokenHash", tokenHash);
+                cmd.Parameters.Add("@TokenHash", System.Data.SqlDbType.VarChar, 128).Value = tokenHash;
+
                 using SqlDataReader reader = cmd.ExecuteReader();
 
                 if (reader.Read())
@@ -67,12 +69,8 @@ namespace PotyIaApi.Repositories
                         UsuarioID = reader["UsuarioID"].ToString()!,
                         CriadoEm = Convert.ToDateTime(reader["CriadoEm"]),
                         ExpiraEm = Convert.ToDateTime(reader["ExpiraEm"]),
-                        RevogadoEm = reader["RevogadoEm"] == DBNull.Value
-                            ? null
-                            : Convert.ToDateTime(reader["RevogadoEm"]),
-                        SubstituidoPorTokenHash = reader["SubstituidoPorTokenHash"] == DBNull.Value
-                            ? null
-                            : reader["SubstituidoPorTokenHash"].ToString()
+                        RevogadoEm = reader["RevogadoEm"] == DBNull.Value ? null : Convert.ToDateTime(reader["RevogadoEm"]),
+                        SubstituidoPorTokenHash = reader["SubstituidoPorTokenHash"] == DBNull.Value ? null : reader["SubstituidoPorTokenHash"].ToString()
                     };
                 }
             }
@@ -88,7 +86,7 @@ namespace PotyIaApi.Repositories
             return refreshToken;
         }
 
-        public void Revogar(long id, string? substituidoPorTokenHash)
+        public void Revogar(long id, string substituidoPorTokenHash)
         {
             SqlConnection con = BuscarConexao();
 
@@ -96,16 +94,17 @@ namespace PotyIaApi.Repositories
             {
                 AbrirConexao(con);
 
-                string query = @"UPDATE PotyIA.RefreshTokens
-                                 SET RevogadoEm = @RevogadoEm,
-                                     SubstituidoPorTokenHash = @SubstituidoPorTokenHash
-                                 WHERE Id = @Id AND RevogadoEm IS NULL";
+                const string query = @"UPDATE Global.RefreshTokens
+                                       SET RevogadoEm = @RevogadoEm,
+                                           SubstituidoPorTokenHash = @SubstituidoPorTokenHash
+                                       WHERE Id = @Id
+                                         AND RevogadoEm IS NULL;";
 
                 using var cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@RevogadoEm", DateTime.UtcNow);
-                cmd.Parameters.AddWithValue("@SubstituidoPorTokenHash",
-                    (object?)substituidoPorTokenHash ?? DBNull.Value);
-                cmd.Parameters.AddWithValue("@Id", id);
+                cmd.Parameters.Add("@RevogadoEm", System.Data.SqlDbType.DateTime2).Value = DateTime.UtcNow;
+                cmd.Parameters.Add("@SubstituidoPorTokenHash", System.Data.SqlDbType.VarChar, 128).Value = substituidoPorTokenHash;
+                cmd.Parameters.Add("@Id", System.Data.SqlDbType.BigInt).Value = id;
+
                 cmd.ExecuteNonQuery();
             }
             catch (Exception)
@@ -126,13 +125,15 @@ namespace PotyIaApi.Repositories
             {
                 AbrirConexao(con);
 
-                string query = @"UPDATE PotyIA.RefreshTokens
-                                 SET RevogadoEm = @RevogadoEm
-                                 WHERE UsuarioID = @UsuarioID AND RevogadoEm IS NULL";
+                const string query = @"UPDATE Global.RefreshTokens
+                                       SET RevogadoEm = @RevogadoEm
+                                       WHERE UsuarioID = @UsuarioID
+                                         AND RevogadoEm IS NULL;";
 
                 using var cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@RevogadoEm", DateTime.UtcNow);
-                cmd.Parameters.AddWithValue("@UsuarioID", usuarioID);
+                cmd.Parameters.Add("@RevogadoEm", System.Data.SqlDbType.DateTime2).Value = DateTime.UtcNow;
+                cmd.Parameters.Add("@UsuarioID", System.Data.SqlDbType.VarChar, 50).Value = usuarioID;
+
                 cmd.ExecuteNonQuery();
             }
             catch (Exception)

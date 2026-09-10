@@ -1,10 +1,6 @@
-﻿using Microsoft.IdentityModel.Tokens;
 using PotyIaApi.Interfaces;
 using PotyIaApi.Models;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using System.Security.Cryptography;
-using System.Text;
 
 namespace PotyIaApi.Services
 {
@@ -23,43 +19,18 @@ namespace PotyIaApi.Services
         private readonly IConfiguration _config;
         private readonly IRefreshTokenRepositorio _refreshTokenRepositorio;
         private readonly IHelper _helper;
+        private readonly TokenService _tokenService;
 
         public RefreshTokenService(
             IConfiguration config,
             IRefreshTokenRepositorio refreshTokenRepositorio,
-            IHelper helper)
+            IHelper helper,
+            TokenService tokenService)
         {
             _config = config;
             _refreshTokenRepositorio = refreshTokenRepositorio;
             _helper = helper;
-        }
-
-        // ==================================================
-        // ACCESS TOKEN
-        // ==================================================
-
-        public string GerarAccessToken(UsuarioAutenticadoModel usuario)
-        {
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            var claims = new[]
-            {
-                new Claim(ClaimTypes.NameIdentifier, usuario.UsuarioID),
-                new Claim(ClaimTypes.Name, usuario.Nome),
-            };
-
-            var minutos = int.TryParse(_config["Jwt:AccessTokenExpirationMinutes"], out var m) ? m : 120;
-
-            var token = new JwtSecurityToken(
-                issuer: _config["Jwt:Issuer"],
-                audience: _config["Jwt:Audience"],
-                claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(minutos),
-                signingCredentials: creds
-            );
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            _tokenService = tokenService;
         }
 
         // ==================================================
@@ -68,7 +39,7 @@ namespace PotyIaApi.Services
 
         public TokensRespostaModel GerarTokens(UsuarioAutenticadoModel usuario)
         {
-            var accessToken = GerarAccessToken(usuario);
+            var accessToken = _tokenService.GerarAccessToken(usuario);
             var (refreshTokenPuro, entidade) = CriarRefreshToken(usuario.UsuarioID);
 
             _refreshTokenRepositorio.Inserir(entidade);
@@ -121,7 +92,7 @@ namespace PotyIaApi.Services
             _refreshTokenRepositorio.Inserir(novaEntidade);
             _refreshTokenRepositorio.Revogar(armazenado.Id, novaEntidade.TokenHash);
 
-            var novoAccessToken = GerarAccessToken(usuario);
+            var novoAccessToken = _tokenService.GerarAccessToken(usuario);
 
             return new ResultadoRefreshToken
             {

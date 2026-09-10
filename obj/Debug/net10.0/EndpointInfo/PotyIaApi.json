@@ -106,12 +106,12 @@
     "schemas": {
       "AutenticacaoModel": {
         "required": [
-          "CPF",
-          "Senha"
+          "Senha",
+          "Usuario"
         ],
         "type": "object",
         "properties": {
-          "CPF": {
+          "Usuario": {
             "type": "string",
             "nullable": true
           },

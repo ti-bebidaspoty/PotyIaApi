@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using PotyIaApi.Helpers;
 using PotyIaApi.Interfaces;
+using PotyIaApi.Models;
 using PotyIaApi.Repositories;
 using PotyIaApi.Services;
 using System.Text;
@@ -53,6 +55,10 @@ builder.Services
 builder.Services.AddScoped<IHelper, Helper>();
 
 builder.Services.AddScoped<
+    IPasswordHasher<UsuarioInternoModel>,
+    PasswordHasher<UsuarioInternoModel>>();
+
+builder.Services.AddScoped<
     IBasicoRepositorio,
     BasicoRepositorio>();
 
@@ -69,6 +75,8 @@ builder.Services.AddScoped<
     RefreshTokenRepositorio>();
 
 builder.Services.AddScoped<AutenticacaoService>();
+
+builder.Services.AddScoped<TokenService>();
 
 builder.Services.AddScoped<RefreshTokenService>();
 

@@ -1,54 +1,79 @@
-﻿using PotyIaApi.Helpers;
-using PotyIaApi.Interfaces;
+﻿using PotyIaApi.Interfaces;
 using PotyIaApi.Models;
 using Microsoft.Data.SqlClient;
 
 namespace PotyIaApi.Repositories
 {
-    public class AutenticacaoRepositorio : BasicoRepositorio, IAutenticacaoRepositorio
-    {
-        private readonly IHelper _helper;
+	public class AutenticacaoRepositorio : BasicoRepositorio, IAutenticacaoRepositorio
+	{
+		private readonly IConfiguration _configuracao;
 
-        public AutenticacaoRepositorio(IConfiguration configuration, IHelper helper) : base(configuration)
-        {
-            _helper = helper;
-        }
+		public AutenticacaoRepositorio(IConfiguration configuration) : base(configuration)
+		{
+			_configuracao = configuration;
+		}
 
-        public UsuarioAutenticadoModel RealizarAutenticacao(AutenticacaoModel autenticacao)
-        {
-            SqlConnection con = BuscarConexao();
-            UsuarioAutenticadoModel usuarioLogado = null!;
+		public async Task<UsuarioInternoModel?> BuscarUsuario(string usuario)
+		{
+			var aplicacaoId = _configuracao["Aplicacoes:PotyIA"];
 
-            try
-            {
-                AbrirConexao(con);
+			if (string.IsNullOrWhiteSpace(aplicacaoId))
+				throw new InvalidOperationException(
+					"A configuração 'Aplicacoes:PotyIA' não foi encontrada no appsettings.json.");
 
-                string query = @"SELECT UsuarioID, Nome
-	                                FROM PotyIA.Usuarios
-	                                WHERE CPF = @CPF AND Senha = @Senha AND Ativo = 1";
+			SqlConnection con = BuscarConexao();
+			UsuarioInternoModel? usuarioInterno = null;
 
-                using var cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@CPF", autenticacao.CPF);
-                cmd.Parameters.AddWithValue("@Senha", _helper.Criptografar(autenticacao.Senha));
-                using SqlDataReader reader = cmd.ExecuteReader();
-                reader.Read();
+			try
+			{
+				AbrirConexao(con);
 
-                if (reader.HasRows) usuarioLogado = new UsuarioAutenticadoModel
-                {
-                    UsuarioID = reader["UsuarioID"].ToString()!,
-                    Nome = reader["Nome"].ToString()!,
-                };
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
-                FecharConexao(con);
-            }
+				// A senha NÃO é comparada no SQL. Apenas localizamos o usuário
+				// ativo, vinculado à aplicação PotyIA e com a aplicação ativa.
+				const string query = @"SELECT
+											U.UsuarioID,
+											U.Nome,
+											U.Usuarios,
+											U.Senha,
+											U.Status
+										FROM Global.Usuarios U
+										INNER JOIN Global.UsuariosAplicacoes UA
+											ON UA.UsuarioID = U.UsuarioID
+										INNER JOIN Global.Aplicacoes A
+											ON A.AplicacaoID = UA.AplicacaoID
+										WHERE U.Usuarios = @Usuario
+										  AND U.Status = 1
+										  AND UA.AplicacaoID = @AplicacaoID
+										  AND A.Status = 1;";
 
-            return usuarioLogado;
-        }
-    }
+				using var cmd = new SqlCommand(query, con);
+				cmd.Parameters.Add("@Usuario", System.Data.SqlDbType.VarChar, 200).Value = usuario;
+				cmd.Parameters.Add("@AplicacaoID", System.Data.SqlDbType.VarChar, 50).Value = aplicacaoId;
+
+				using SqlDataReader reader = await cmd.ExecuteReaderAsync();
+
+				if (await reader.ReadAsync())
+				{
+					usuarioInterno = new UsuarioInternoModel
+					{
+						UsuarioID = reader["UsuarioID"].ToString()!,
+						Nome = reader["Nome"].ToString()!,
+						Usuario = reader["Usuarios"].ToString()!,
+						SenhaHash = reader["Senha"].ToString()!,
+						Status = Convert.ToBoolean(reader["Status"])
+					};
+				}
+			}
+			catch (Exception)
+			{
+				throw;
+			}
+			finally
+			{
+				FecharConexao(con);
+			}
+
+			return usuarioInterno;
+		}
+	}
 }

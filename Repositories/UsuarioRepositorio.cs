@@ -6,11 +6,8 @@ namespace PotyIaApi.Repositories
 {
     public class UsuarioRepositorio : BasicoRepositorio, IUsuarioRepositorio
     {
-        private readonly IHelper _helper;
-
-        public UsuarioRepositorio(IConfiguration configuration, IHelper helper) : base(configuration)
+        public UsuarioRepositorio(IConfiguration configuration) : base(configuration)
         {
-            _helper = helper;
         }
 
         public void CadastrarUsuario(UsuarioFormModel usuario)
@@ -20,7 +17,7 @@ namespace PotyIaApi.Repositories
             try
             {
                 AbrirConexao(con);
-                string query = @"INSERT INTO PotyIA.Usuarios(UsuarioID, Nome, CPF, Senha, Ativo) VALUES (NEWID(), @Nome, @CPF, @Senha, 1)";
+                string query = @"INSERT INTO Global.Usuarios(UsuarioID, Nome, Usuarios, Senha, DepartamentoID, Status, IsAdmin) VALUES (NEWID(), @Nome, @CPF, @Senha, null, 1, 0)";
 
                 using (var cmd = new SqlCommand(query, con))
                 {
@@ -68,7 +65,7 @@ namespace PotyIaApi.Repositories
                 {
                     Nome = reader["Nome"].ToString()!,
                     CPF = reader["CPF"].ToString()!,
-                    Senha = _helper.Criptografar(reader["DataNascimento"].ToString()!),
+                    Senha = reader["DataNascimento"].ToString()!,
                 };
             }
             catch (Exception)
@@ -90,7 +87,7 @@ namespace PotyIaApi.Repositories
             try
             {
                 AbrirConexao(con);
-                string query = @"SELECT COUNT(*) FROM PotyIA.Usuarios WHERE CPF = @CPF";
+                string query = @"SELECT COUNT(*) FROM Global.Usuarios WHERE Usuarios = @CPF";
                 using (var cmd = new SqlCommand(query, con))
                 {
                     cmd.Parameters.AddWithValue("@CPF", cpf);

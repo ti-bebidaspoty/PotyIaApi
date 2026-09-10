@@ -21,14 +21,14 @@ namespace PotyIaApi.Controllers
 
         [HttpPost]
         [Route("")]
-        public IActionResult RealizarAutenticacao([FromBody] AutenticacaoModel login)
+        public async Task<IActionResult> RealizarAutenticacao([FromBody] AutenticacaoModel login)
         {
             try
             {
-                var usuario = _autenticacaoService.RealizarAutenticacao(login);
+                var usuario = await _autenticacaoService.RealizarAutenticacao(login);
 
                 if (usuario == null)
-                    return retornoApi(null, 400, "Usuário ou senha incorretos!");
+                    return retornoApi(null, 400, "Usuário ou senha inválidos.");
 
                 var tokens = _refreshTokenService.GerarTokens(usuario);
 
