@@ -41,7 +41,9 @@ namespace PotyIaApi.Services
             // VerifyHashedPassword valide corretamente no login.
             usuario.Senha = _passwordHasher.HashPassword(new UsuarioInternoModel(), usuario.Senha);
 
-            _usuarioRepositorio.CadastrarUsuario(usuario);
+            var usuarioID = _usuarioRepositorio.CadastrarUsuario(usuario);
+
+            _usuarioRepositorio.CadastrarUsuarioAplicacao(usuarioID);
         }
 
         private UsuarioFormModel VerificarUsuarioSenior(string cpf)

@@ -48,6 +48,16 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "PotyIaApi.Controllers.DownloadAppController",
+    "Method": "Download",
+    "RelativePath": "api/DownloadApp",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "PotyIaApi.Controllers.UsuarioController",
     "Method": "CriarUsuario",
     "RelativePath": "api/Usuario/{cpf}",

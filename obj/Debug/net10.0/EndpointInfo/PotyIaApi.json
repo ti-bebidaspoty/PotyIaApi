@@ -67,6 +67,18 @@
         }
       }
     },
+    "/api/DownloadApp": {
+      "get": {
+        "tags": [
+          "DownloadApp"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/": {
       "get": {
         "tags": [
@@ -140,6 +152,9 @@
   "tags": [
     {
       "name": "Autenticacao"
+    },
+    {
+      "name": "DownloadApp"
     },
     {
       "name": "PotyIaApi"

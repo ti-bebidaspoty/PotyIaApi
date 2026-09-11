@@ -74,6 +74,12 @@ builder.Services.AddScoped<
     IRefreshTokenRepositorio,
     RefreshTokenRepositorio>();
 
+builder.Services.AddScoped<
+    IDownloadAppRepositorio,
+    DownloadAppRepositorio>();
+
+builder.Services.AddScoped<DownloadAppService>();
+
 builder.Services.AddScoped<AutenticacaoService>();
 
 builder.Services.AddScoped<TokenService>();
@@ -81,6 +87,8 @@ builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<RefreshTokenService>();
 
 builder.Services.AddScoped<UsuarioService>();
+
+builder.Services.AddScoped<DownloadAppService>();
 
 // ======================================================
 // CORS

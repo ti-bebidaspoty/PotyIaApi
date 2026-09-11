@@ -10,14 +10,36 @@ namespace PotyIaApi.Repositories
         {
         }
 
-        public void CadastrarUsuario(UsuarioFormModel usuario)
+        public string CadastrarUsuario(UsuarioFormModel usuario)
         {
             SqlConnection con = BuscarConexao();
 
             try
             {
                 AbrirConexao(con);
-                string query = @"INSERT INTO Global.Usuarios(UsuarioID, Nome, Usuarios, Senha, DepartamentoID, Status, IsAdmin) VALUES (NEWID(), @Nome, @CPF, @Senha, null, 1, 0)";
+
+                string query = @"
+            INSERT INTO Global.Usuarios
+            (
+                UsuarioID,
+                Nome,
+                Usuarios,
+                Senha,
+                DepartamentoID,
+                Status,
+                IsAdmin
+            )
+            OUTPUT INSERTED.UsuarioID
+            VALUES
+            (
+                NEWID(),
+                @Nome,
+                @CPF,
+                @Senha,
+                NULL,
+                1,
+                0
+            )";
 
                 using (var cmd = new SqlCommand(query, con))
                 {
@@ -25,7 +47,16 @@ namespace PotyIaApi.Repositories
                     cmd.Parameters.AddWithValue("@CPF", usuario.CPF);
                     cmd.Parameters.AddWithValue("@Senha", usuario.Senha);
 
-                    cmd.ExecuteNonQuery();
+                    var resultado = cmd.ExecuteScalar();
+
+                    if (resultado == null || resultado == DBNull.Value)
+                    {
+                        throw new Exception(
+                            "Não foi possível obter o ID do usuário cadastrado."
+                        );
+                    }
+
+                    return resultado.ToString()!;
                 }
             }
             catch (Exception)
@@ -104,6 +135,30 @@ namespace PotyIaApi.Repositories
                 FecharConexao(con);
             }
             return usuarioJaCadastrado;
+        }
+
+        public void CadastrarUsuarioAplicacao(string usuarioID)
+        {
+            SqlConnection con = BuscarConexao();
+            try
+            {
+                AbrirConexao(con);
+                string query = @"INSERT INTO Global.UsuariosAplicacoes (UsuarioID, AplicacaoID) VALUES (@UsuarioID, @AplicacaoID)";
+                using (var cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@UsuarioID", usuarioID);
+                    cmd.Parameters.AddWithValue("@AplicacaoID", "531610b0-cf28-4c04-81bf-d2ea5b27949b");
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                FecharConexao(con);
+            }
         }
     }
 }
