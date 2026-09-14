@@ -9,64 +9,115 @@ namespace PotyIaApi.Services
         private readonly IAutenticacaoRepositorio _autenticacaoRepositorio;
         private readonly IPasswordHasher<UsuarioInternoModel> _passwordHasher;
         private readonly ILogger<AutenticacaoService> _logger;
+        private readonly IHistoricoLoginRepositorio _historicoLoginRepositorio;
 
         public AutenticacaoService(
             IAutenticacaoRepositorio autenticacaoRepositorio,
             IPasswordHasher<UsuarioInternoModel> passwordHasher,
-            ILogger<AutenticacaoService> logger)
+            ILogger<AutenticacaoService> logger,
+            IHistoricoLoginRepositorio historicoLoginRepositorio)
         {
             _autenticacaoRepositorio = autenticacaoRepositorio;
             _passwordHasher = passwordHasher;
             _logger = logger;
+            _historicoLoginRepositorio = historicoLoginRepositorio;
         }
 
-        /// <summary>
-        /// Autentica o usuário corporativo (schema Global) vinculado ao PotyIA.
-        /// Retorna null em qualquer falha; o motivo é apenas registrado em log,
-        /// nunca exposto ao cliente (evita enumeração de usuários).
-        /// </summary>
-        public async Task<UsuarioAutenticadoModel?> RealizarAutenticacao(AutenticacaoModel autenticacao)
+        public async Task<ResultadoAutenticacaoModel> RealizarAutenticacao(
+            AutenticacaoModel autenticacao)
         {
             if (autenticacao == null ||
                 string.IsNullOrWhiteSpace(autenticacao.Usuario) ||
                 string.IsNullOrWhiteSpace(autenticacao.Senha))
             {
-                _logger.LogInformation("Tentativa de login com credenciais vazias.");
-                return null;
+                _logger.LogInformation(
+                    "Tentativa de login com credenciais vazias."
+                );
+
+                return new ResultadoAutenticacaoModel
+                {
+                    Sucesso = false,
+                    UsuarioNaoCadastrado = false
+                };
             }
 
-            // O repositório já filtra: usuário ativo, vínculo com a aplicação
-            // PotyIA e aplicação ativa. Se vier null, uma dessas condições falhou.
-            var usuarioInterno = await _autenticacaoRepositorio.BuscarUsuario(autenticacao.Usuario);
+            // Primeiro verifica se o CPF realmente existe em Global.Usuarios.
+            var usuarioExiste =
+                await _autenticacaoRepositorio.UsuarioExiste(
+                    autenticacao.Usuario
+                );
+
+            if (!usuarioExiste)
+            {
+                _logger.LogInformation(
+                    "Login negado para '{Usuario}': usuário ainda não cadastrado.",
+                    autenticacao.Usuario
+                );
+
+                return new ResultadoAutenticacaoModel
+                {
+                    Sucesso = false,
+                    UsuarioNaoCadastrado = true
+                };
+            }
+
+            // Aqui o CPF existe, então verificamos se está ativo,
+            // vinculado ao PotyIA e com a aplicação ativa.
+            var usuarioInterno =
+                await _autenticacaoRepositorio.BuscarUsuario(
+                    autenticacao.Usuario
+                );
 
             if (usuarioInterno == null)
             {
                 _logger.LogInformation(
-                    "Login negado para '{Usuario}': usuário inexistente, inativo ou sem vínculo com o PotyIA.",
-                    autenticacao.Usuario);
-                return null;
+                    "Login negado para '{Usuario}': usuário inativo ou sem vínculo com o PotyIA.",
+                    autenticacao.Usuario
+                );
+
+                return new ResultadoAutenticacaoModel
+                {
+                    Sucesso = false,
+                    UsuarioNaoCadastrado = false
+                };
             }
 
             var resultado = _passwordHasher.VerifyHashedPassword(
                 usuarioInterno,
                 usuarioInterno.SenhaHash,
-                autenticacao.Senha);
+                autenticacao.Senha
+            );
 
             if (resultado == PasswordVerificationResult.Failed)
             {
                 _logger.LogInformation(
                     "Login negado para '{Usuario}': senha inválida.",
-                    autenticacao.Usuario);
-                return null;
+                    autenticacao.Usuario
+                );
+
+                return new ResultadoAutenticacaoModel
+                {
+                    Sucesso = false,
+                    UsuarioNaoCadastrado = false
+                };
             }
 
-            // Success e SuccessRehashNeeded são aceitos. O PotyIA NÃO atualiza o
-            // hash: a manutenção da senha pertence ao PotyInternos.
-            return new UsuarioAutenticadoModel
+            _historicoLoginRepositorio.CadastrarPrimeiroLogin(
+                usuarioInterno.UsuarioID
+            );
+
+            var usuarioAutenticado = new UsuarioAutenticadoModel
             {
                 UsuarioID = usuarioInterno.UsuarioID,
                 Nome = usuarioInterno.Nome,
                 Usuario = usuarioInterno.Usuario
+            };
+
+            return new ResultadoAutenticacaoModel
+            {
+                Sucesso = true,
+                UsuarioNaoCadastrado = false,
+                Usuario = usuarioAutenticado
             };
         }
     }

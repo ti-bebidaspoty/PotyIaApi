@@ -6,6 +6,7 @@ using PotyIaApi.Interfaces;
 using PotyIaApi.Models;
 using PotyIaApi.Repositories;
 using PotyIaApi.Services;
+using System.Diagnostics.Metrics;
 using System.Text;
 using System.Text.Json;
 
@@ -78,6 +79,10 @@ builder.Services.AddScoped<
     IDownloadAppRepositorio,
     DownloadAppRepositorio>();
 
+builder.Services.AddScoped<
+    IHistoricoLoginRepositorio,
+    HistoricoLoginRepositorio>();
+
 builder.Services.AddScoped<DownloadAppService>();
 
 builder.Services.AddScoped<AutenticacaoService>();
@@ -88,7 +93,7 @@ builder.Services.AddScoped<RefreshTokenService>();
 
 builder.Services.AddScoped<UsuarioService>();
 
-builder.Services.AddScoped<DownloadAppService>();
+builder.Services.AddScoped<HistoricoLoginService>();
 
 // ======================================================
 // CORS

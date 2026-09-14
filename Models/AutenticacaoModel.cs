@@ -26,4 +26,13 @@
         public string SenhaHash { get; set; } = string.Empty;
         public bool Status { get; set; }
     }
+
+    public class ResultadoAutenticacaoModel
+    {
+        public bool Sucesso { get; set; }
+
+        public bool UsuarioNaoCadastrado { get; set; }
+
+        public UsuarioAutenticadoModel? Usuario { get; set; }
+    }
 }

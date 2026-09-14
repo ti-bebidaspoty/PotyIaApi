@@ -8,5 +8,6 @@ namespace PotyIaApi.Interfaces
         public bool VerificarUsuarioJaCadastrado(string cpf);
         public UsuarioFormModel VerificarUsuarioSenior(string cpf);
         public void CadastrarUsuarioAplicacao(string usuarioID);
+        bool AlterarSenha(string usuarioID, string senha);
     }
 }

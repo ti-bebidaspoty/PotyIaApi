@@ -32,27 +32,54 @@ namespace PotyIaApi.Services
                 throw new Exception("Usuário não encontrado.");
             }
 
-            // O nome vem da Senior todo em maiúsculo. Formata para Title Case
-            // (ex.: "JOAO PEDRO MARTINS" -> "Joao Pedro Martins").
             usuario.Nome = FormatarNome(usuario.Nome);
 
-            // Gera o hash da senha com o MESMO algoritmo usado na autenticação
-            // (Microsoft.AspNetCore.Identity.PasswordHasher), garantindo que
-            // VerifyHashedPassword valide corretamente no login.
-            usuario.Senha = _passwordHasher.HashPassword(new UsuarioInternoModel(), usuario.Senha);
+            usuario.Senha = _passwordHasher.HashPassword(
+                new UsuarioInternoModel(),
+                usuario.Senha
+            );
 
             var usuarioID = _usuarioRepositorio.CadastrarUsuario(usuario);
 
             _usuarioRepositorio.CadastrarUsuarioAplicacao(usuarioID);
         }
 
+        public void AlterarSenha(AlterarSenhaModel model)
+        {
+            if (string.IsNullOrWhiteSpace(model.UsuarioID))
+            {
+                throw new Exception("Usuário não informado.");
+            }
+
+            if (string.IsNullOrWhiteSpace(model.NovaSenha))
+            {
+                throw new Exception("Nova senha não informada.");
+            }
+
+            string senhaHash = _passwordHasher.HashPassword(
+                new UsuarioInternoModel(),
+                model.NovaSenha
+            );
+
+            bool alterado = _usuarioRepositorio.AlterarSenha(
+                model.UsuarioID,
+                senhaHash
+            );
+
+            if (!alterado)
+            {
+                throw new Exception("Usuário não encontrado.");
+            }
+        }
+
         private UsuarioFormModel VerificarUsuarioSenior(string cpf)
         {
             var usuario = _usuarioRepositorio.VerificarUsuarioSenior(cpf);
+
             if (usuario == null)
             {
                 throw new Exception("Usuário não encontrado.");
-            };
+            }
 
             return usuario;
         }
@@ -68,7 +95,10 @@ namespace PotyIaApi.Services
                 return nome;
 
             var cultura = new CultureInfo("pt-BR");
-            return cultura.TextInfo.ToTitleCase(nome.Trim().ToLower(cultura));
+
+            return cultura.TextInfo.ToTitleCase(
+                nome.Trim().ToLower(cultura)
+            );
         }
     }
 }

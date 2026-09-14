@@ -79,6 +79,28 @@
         }
       }
     },
+    "/api/HistoricoLogin/{usuarioID}": {
+      "get": {
+        "tags": [
+          "HistoricoLogin"
+        ],
+        "parameters": [
+          {
+            "name": "usuarioID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/": {
       "get": {
         "tags": [
@@ -112,10 +134,59 @@
           }
         }
       }
+    },
+    "/api/Usuario/senha": {
+      "post": {
+        "tags": [
+          "Usuario"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AlterarSenhaModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AlterarSenhaModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AlterarSenhaModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
+      "AlterarSenhaModel": {
+        "required": [
+          "NovaSenha",
+          "UsuarioID"
+        ],
+        "type": "object",
+        "properties": {
+          "UsuarioID": {
+            "type": "string",
+            "nullable": true
+          },
+          "NovaSenha": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "AutenticacaoModel": {
         "required": [
           "Senha",
@@ -155,6 +226,9 @@
     },
     {
       "name": "DownloadApp"
+    },
+    {
+      "name": "HistoricoLogin"
     },
     {
       "name": "PotyIaApi"

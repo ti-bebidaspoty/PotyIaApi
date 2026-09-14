@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PotyIaApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+090643d9c9d399d87d7831faa01e3235a1481199")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e2b9f1293741637904f9dbffe8896f532323a2ad")]
 [assembly: System.Reflection.AssemblyProductAttribute("PotyIaApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PotyIaApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

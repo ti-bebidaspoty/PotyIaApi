@@ -160,5 +160,38 @@ namespace PotyIaApi.Repositories
                 FecharConexao(con);
             }
         }
+
+        public bool AlterarSenha(string usuarioID, string senha)
+        {
+            SqlConnection con = BuscarConexao();
+
+            try
+            {
+                AbrirConexao(con);
+
+                string query = @"
+            UPDATE Global.Usuarios
+            SET Senha = @Senha
+            WHERE UsuarioID = @UsuarioID";
+
+                using (var cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@UsuarioID", usuarioID);
+                    cmd.Parameters.AddWithValue("@Senha", senha);
+
+                    int linhasAfetadas = cmd.ExecuteNonQuery();
+
+                    return linhasAfetadas > 0;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                FecharConexao(con);
+            }
+        }
     }
 }

@@ -1,7 +1,24 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\joao.martins\\Documents\\GitHub\\PotyIaApi\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{99BBA2C0-D0D3-513A-3BFB-E6280D52DCD9}|PotyIaApi.csproj|c:\\users\\joao.martins\\documents\\github\\potyiaapi\\controllers\\autenticacaocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{99BBA2C0-D0D3-513A-3BFB-E6280D52DCD9}|PotyIaApi.csproj|solutionrelative:controllers\\autenticacaocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{99BBA2C0-D0D3-513A-3BFB-E6280D52DCD9}|PotyIaApi.csproj|c:\\users\\joao.martins\\documents\\github\\potyiaapi\\services\\autenticacaoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{99BBA2C0-D0D3-513A-3BFB-E6280D52DCD9}|PotyIaApi.csproj|solutionrelative:services\\autenticacaoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{99BBA2C0-D0D3-513A-3BFB-E6280D52DCD9}|PotyIaApi.csproj|c:\\users\\joao.martins\\documents\\github\\potyiaapi\\models\\autenticacaomodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{99BBA2C0-D0D3-513A-3BFB-E6280D52DCD9}|PotyIaApi.csproj|solutionrelative:models\\autenticacaomodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{99BBA2C0-D0D3-513A-3BFB-E6280D52DCD9}|PotyIaApi.csproj|c:\\users\\joao.martins\\documents\\github\\potyiaapi\\repositories\\autenticacaorepositorio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{99BBA2C0-D0D3-513A-3BFB-E6280D52DCD9}|PotyIaApi.csproj|solutionrelative:repositories\\autenticacaorepositorio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,11 +26,63 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AutenticacaoModel.cs",
+              "DocumentMoniker": "C:\\Users\\joao.martins\\Documents\\GitHub\\PotyIaApi\\Models\\AutenticacaoModel.cs",
+              "RelativeDocumentMoniker": "Models\\AutenticacaoModel.cs",
+              "ToolTip": "C:\\Users\\joao.martins\\Documents\\GitHub\\PotyIaApi\\Models\\AutenticacaoModel.cs",
+              "RelativeToolTip": "Models\\AutenticacaoModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACQAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-14T20:35:12.364Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AutenticacaoController.cs",
+              "DocumentMoniker": "C:\\Users\\joao.martins\\Documents\\GitHub\\PotyIaApi\\Controllers\\AutenticacaoController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AutenticacaoController.cs",
+              "ToolTip": "C:\\Users\\joao.martins\\Documents\\GitHub\\PotyIaApi\\Controllers\\AutenticacaoController.cs",
+              "RelativeToolTip": "Controllers\\AutenticacaoController.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAAAcwEYAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-14T20:32:18.999Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AutenticacaoService.cs",
+              "DocumentMoniker": "C:\\Users\\joao.martins\\Documents\\GitHub\\PotyIaApi\\Services\\AutenticacaoService.cs",
+              "RelativeDocumentMoniker": "Services\\AutenticacaoService.cs",
+              "ToolTip": "C:\\Users\\joao.martins\\Documents\\GitHub\\PotyIaApi\\Services\\AutenticacaoService.cs",
+              "RelativeToolTip": "Services\\AutenticacaoService.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAowHsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-14T20:32:10.508Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AutenticacaoRepositorio.cs",
+              "DocumentMoniker": "C:\\Users\\joao.martins\\Documents\\GitHub\\PotyIaApi\\Repositories\\AutenticacaoRepositorio.cs",
+              "RelativeDocumentMoniker": "Repositories\\AutenticacaoRepositorio.cs",
+              "ToolTip": "C:\\Users\\joao.martins\\Documents\\GitHub\\PotyIaApi\\Repositories\\AutenticacaoRepositorio.cs",
+              "RelativeToolTip": "Repositories\\AutenticacaoRepositorio.cs",
+              "ViewState": "AgIAAEYAAAAAAAAAAAAwwHEAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-14T20:31:55.791Z",
+              "EditorCaption": ""
             }
           ]
         }

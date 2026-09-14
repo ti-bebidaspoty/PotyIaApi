@@ -11,5 +11,6 @@ namespace PotyIaApi.Interfaces
         /// A validação da senha é responsabilidade do Service (PasswordHasher).
         /// </summary>
         Task<UsuarioInternoModel?> BuscarUsuario(string usuario);
+        Task<bool> UsuarioExiste(string usuario);
     }
 }

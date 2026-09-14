@@ -75,5 +75,42 @@ namespace PotyIaApi.Repositories
 
 			return usuarioInterno;
 		}
-	}
+
+        public async Task<bool> UsuarioExiste(string usuario)
+        {
+            SqlConnection con = BuscarConexao();
+
+            try
+            {
+                AbrirConexao(con);
+
+                const string query = @"
+            SELECT COUNT(1)
+            FROM Global.Usuarios
+            WHERE Usuarios = @Usuario;";
+
+                using var cmd = new SqlCommand(query, con);
+
+                cmd.Parameters.Add(
+                    "@Usuario",
+                    System.Data.SqlDbType.VarChar,
+                    200
+                ).Value = usuario;
+
+                var quantidade = Convert.ToInt32(
+                    await cmd.ExecuteScalarAsync()
+                );
+
+                return quantidade > 0;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                FecharConexao(con);
+            }
+        }
+    }
 }

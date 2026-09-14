@@ -21,16 +21,36 @@ namespace PotyIaApi.Controllers
 
         [HttpPost]
         [Route("")]
-        public async Task<IActionResult> RealizarAutenticacao([FromBody] AutenticacaoModel login)
+        public async Task<IActionResult> RealizarAutenticacao(
+    [FromBody] AutenticacaoModel login)
         {
             try
             {
-                var usuario = await _autenticacaoService.RealizarAutenticacao(login);
+                var resultado =
+                    await _autenticacaoService.RealizarAutenticacao(login);
 
-                if (usuario == null)
-                    return retornoApi(null, 400, "Usuário ou senha inválidos.");
+                if (!resultado.Sucesso)
+                {
+                    if (resultado.UsuarioNaoCadastrado)
+                    {
+                        return retornoApi(
+                            null,
+                            400,
+                            "Usuário ainda não possui cadastro. Realize seu cadastro para continuar."
+                        );
+                    }
 
-                var tokens = _refreshTokenService.GerarTokens(usuario);
+                    return retornoApi(
+                        null,
+                        400,
+                        "Usuário ou senha inválidos."
+                    );
+                }
+
+                var usuario = resultado.Usuario!;
+
+                var tokens =
+                    _refreshTokenService.GerarTokens(usuario);
 
                 return retornoApi(new
                 {
@@ -42,7 +62,11 @@ namespace PotyIaApi.Controllers
             }
             catch (Exception ex)
             {
-                return retornoApi(null, 500, $"Erro ao autenticar usuário: {ex.Message}");
+                return retornoApi(
+                    null,
+                    500,
+                    $"Erro ao autenticar usuário: {ex.Message}"
+                );
             }
         }
 

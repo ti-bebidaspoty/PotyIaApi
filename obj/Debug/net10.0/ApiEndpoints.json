@@ -58,6 +58,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "PotyIaApi.Controllers.HistoricoLoginController",
+    "Method": "UsuarioJaLogou",
+    "RelativePath": "api/HistoricoLogin/{usuarioID}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "usuarioID",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "PotyIaApi.Controllers.UsuarioController",
     "Method": "CriarUsuario",
     "RelativePath": "api/Usuario/{cpf}",
@@ -68,6 +84,22 @@
       {
         "Name": "cpf",
         "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PotyIaApi.Controllers.UsuarioController",
+    "Method": "AlterarSenha",
+    "RelativePath": "api/Usuario/senha",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "PotyIaApi.Models.AlterarSenhaModel",
         "IsRequired": true
       }
     ],
